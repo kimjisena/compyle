@@ -20,7 +20,11 @@ def watch():
             if os.stat(inFile).st_mtime != fileStat['lastMod']:
                 print('{} changed...'.format(inFile))
                 fileStat['lastMod'] = os.stat(inFile).st_mtime
-                print(compile(inFile, outFile))
+                status = compile(inFile, outFile)
+                if status == None:
+                    pass
+                else:
+                    print(status)
             else:
                 continue
         except KeyboardInterrupt:
