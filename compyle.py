@@ -1,8 +1,13 @@
 #! /usr/bin/python
 
-import os, sys
+import os, sys, subprocess as sub
 
 # compyle src:dest
+def compile(infile, outfile):
+    gccargs = ['gcc {} -o {}'.format(infile, outfile)]
+    gcc = sub.Popen(gccargs, shell=True, stdout=sub.PIPE)
+    return gcc.communicate()[1]
+
 def watch():
     fileStat = {}
     inFile, outFile = sys.argv[1].split(':')
@@ -15,6 +20,7 @@ def watch():
             if os.stat(inFile).st_mtime != fileStat['lastMod']:
                 print('{} changed...'.format(inFile))
                 fileStat['lastMod'] = os.stat(inFile).st_mtime
+                print(compile(inFile, outFile))
             else:
                 continue
         except KeyboardInterrupt:
