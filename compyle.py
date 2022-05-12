@@ -29,7 +29,6 @@ def watch():
                 status = compile(inFile, outFile)
                 if len(sys.argv) > 2:
                     cliargs = sys.argv[3:]
-                    #print(cliargs)
                     run(outFile, cliargs)
                 if status == None:
                     pass
