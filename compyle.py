@@ -1,12 +1,18 @@
 #! /usr/bin/python
 
 import os, sys, subprocess as sub
-
 # compyle src:dest
 def compile(infile, outfile):
     gccargs = ['gcc {} -o {}'.format(infile, outfile)]
     gcc = sub.Popen(gccargs, shell=True, stdout=sub.PIPE)
     return gcc.communicate()[1]
+
+# compyle src:dest -r [args]
+def run(outfile, args):
+    command = outfile
+    for arg in args:
+        command += ' ' + arg 
+    print(command)
 
 def watch():
     fileStat = {}
@@ -21,6 +27,10 @@ def watch():
                 print('{} changed...'.format(inFile))
                 fileStat['lastMod'] = os.stat(inFile).st_mtime
                 status = compile(inFile, outFile)
+                if len(sys.argv) > 2:
+                    cliargs = sys.argv[3:]
+                    #print(cliargs)
+                    run(outFile, cliargs)
                 if status == None:
                     pass
                 else:
