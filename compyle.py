@@ -9,11 +9,16 @@ def watch():
     fileStat['lastMod'] = os.stat(inFile).st_mtime
 
     print('Watching {} for changes...'.format(inFile))
+    print('<Ctrl + C> to exit...')
     while True:
-        if os.stat(inFile).st_mtime != fileStat['lastMod']:
-            print('{} changed...'.format(inFile))
-            fileStat['lastMod'] = os.stat(inFile).st_mtime
-        else:
-            continue
+        try:    
+            if os.stat(inFile).st_mtime != fileStat['lastMod']:
+                print('{} changed...'.format(inFile))
+                fileStat['lastMod'] = os.stat(inFile).st_mtime
+            else:
+                continue
+        except KeyboardInterrupt:
+            print('\n')
+            break
 
 if __name__ == '__main__': watch()
