@@ -25,7 +25,6 @@ def watch():
     while True:
         try:    
             if os.stat(inFile).st_mtime != fileStat['lastMod']:
-                sub.Popen(['clear'], shell=True)
                 print('{} changed...'.format(inFile))
                 fileStat['lastMod'] = os.stat(inFile).st_mtime
                 status = compile(inFile, outFile)
