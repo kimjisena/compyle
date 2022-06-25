@@ -9,10 +9,11 @@ def compile(infile, outfile):
 
 # compyle src:dest -r [args]
 def run(outfile, args):
-    command = outfile
+    command = './' + outfile
     for arg in args:
         command += ' ' + arg 
-    print(command)
+    #print(command)
+    print(str(sub.Popen(command, shell=True, stdout=sub.PIPE).communicate()[0], 'utf-8'))
 
 def watch():
     fileStat = {}
@@ -24,6 +25,7 @@ def watch():
     while True:
         try:    
             if os.stat(inFile).st_mtime != fileStat['lastMod']:
+                sub.Popen(['clear'], shell=True)
                 print('{} changed...'.format(inFile))
                 fileStat['lastMod'] = os.stat(inFile).st_mtime
                 status = compile(inFile, outFile)
